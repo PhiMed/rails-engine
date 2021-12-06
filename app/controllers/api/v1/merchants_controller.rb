@@ -3,9 +3,9 @@ class Api::V1::MerchantsController < ApplicationController
     render json: Merchant.all
   end
 
-#   def show
-#      render json: Merchant.find(params[:id])
-#   end
+  def show
+     render json: Merchant.find(params[:id])
+  end
 #
 #   def create
 #     render json: Merchant.create(merchant_params)
@@ -19,9 +19,9 @@ class Api::V1::MerchantsController < ApplicationController
 #     render json: Merchant.delete(params[:id])
 #   end
 #
-# private
-#
-#   def merchant_params
-#     params.require(:merchant).permit(:title, :author, :summary, :genre, :number_sold )
-#   end
-# end
+private
+
+  def merchant_params
+    params.require(:merchant).permit(:name)
+  end
+end
