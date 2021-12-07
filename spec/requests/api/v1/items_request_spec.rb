@@ -27,7 +27,6 @@ describe 'Items API' do
       expect(item).to have_key(:merchant_id)
       expect(item[:merchant_id]).to be_a(Integer)
     end
-
   end
 
   it "can get one item by its id" do
@@ -35,7 +34,7 @@ describe 'Items API' do
 
     get "/api/v1/items/#{id}"
 
-    item = JSON.parse(response.body, symbolize_names: true)
+    item = JSON.parse(response.body, symbolize_names: true)[:item]
 
     expect(response).to be_successful
 
@@ -93,4 +92,28 @@ describe 'Items API' do
       expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
     end
 
+    it 'can get the merchant data for an item id' do
+      merchant_1 = create(:merchant)
+      merchant_2 = create(:merchant)
+      item_1 = create(:item, merchant: merchant_1)
+      item_2 = create(:item, merchant: merchant_2)
+
+      get "/api/v1/items/#{item_1.id}"
+
+      merchant_info = JSON.parse(response.body, symbolize_names: true)[:merchant]
+
+      expect(merchant_info).to have_key(:id)
+      expect(merchant_info[:id]).to eq(merchant_1.id)
+      expect(merchant_info).to have_key(:name)
+      expect(merchant_info[:name]).to eq(merchant_1.name)
+
+      get "/api/v1/items/#{item_2.id}"
+
+      merchant_info = JSON.parse(response.body, symbolize_names: true)[:merchant]
+
+      expect(merchant_info).to have_key(:id)
+      expect(merchant_info[:id]).to eq(merchant_2.id)
+      expect(merchant_info).to have_key(:name)
+      expect(merchant_info[:name]).to eq(merchant_2.name)
+    end
   end

@@ -6,7 +6,12 @@ class Api::V1::ItemsController < ApplicationController
 
   def show
     item = Item.find(params[:id])
-    render json: item
+    merchant = Merchant.find(item.merchant.id)
+    content = {
+      item: item,
+      merchant: merchant
+               }
+    render json: content
   end
 
   def create
