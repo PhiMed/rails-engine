@@ -16,7 +16,16 @@ describe 'Merchants API' do
       expect(merchant[:attributes]).to have_key(:name)
       expect(merchant[:attributes][:name]).to be_an(String)
     end
+  end
+  
+  it 'still returns an array if no merchants exist' do
+    get '/api/v1/merchants'
 
+    expect(response).to be_successful
+
+    merchants = (JSON.parse(response.body, symbolize_names: true))[:data]
+
+    expect(merchants).to be_an(Array)
   end
 
   it "can get one merchant by its id" do
