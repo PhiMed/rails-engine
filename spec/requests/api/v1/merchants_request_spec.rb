@@ -8,13 +8,13 @@ describe 'Merchants API' do
 
     expect(response).to be_successful
 
-    merchants = JSON.parse(response.body, symbolize_names: true)
+    merchants = (JSON.parse(response.body, symbolize_names: true))[:data]
 
     expect(merchants.count).to eq 3
 
     merchants.each do |merchant|
-      expect(merchant).to have_key(:id)
-      expect(merchant[:id]).to be_an(Integer)
+      expect(merchant[:attributes]).to have_key(:name)
+      expect(merchant[:attributes][:name]).to be_an(String)
     end
 
   end
@@ -24,15 +24,12 @@ describe 'Merchants API' do
 
     get "/api/v1/merchants/#{id}"
 
-    merchant = JSON.parse(response.body, symbolize_names: true)
+    merchant = (JSON.parse(response.body, symbolize_names: true))[:data]
 
     expect(response).to be_successful
 
-    expect(merchant).to have_key(:id)
-    expect(merchant[:id]).to eq(id)
-
-    expect(merchant).to have_key(:name)
-    expect(merchant[:name]).to be_a(String)
+    expect(merchant[:attributes]).to have_key(:name)
+    expect(merchant[:attributes][:name]).to be_a(String)
   end
 
   it "can get all a merchants items" do
@@ -42,13 +39,12 @@ describe 'Merchants API' do
 
     get "/api/v1/merchants/#{id}/items"
 
-    items = JSON.parse(response.body, symbolize_names: true)
+    items = (JSON.parse(response.body, symbolize_names: true))[:data][:attributes][:items]
     expect(response).to be_successful
-
     expect(items.count).to eq 6
     expect(items.first).to be_a Hash
     expect(items.first.keys).to eq(
-    [:id, :name, :description, :unit_price, :merchant_id, :created_at, :updated_at]
-                                    )
+      [:id, :name, :description, :unit_price, :merchant_id, :created_at, :updated_at]
+                                   )
   end
 end

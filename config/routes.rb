@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
         resources :items
 
+        get '/items/:id/merchant', to: 'items_merchant#show'
+
         get '/search', to: 'search#show'
 
       end
