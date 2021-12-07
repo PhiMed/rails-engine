@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
         resources :items
 
+        get '/search', to: 'search#show'
+
       end
     end
 end
