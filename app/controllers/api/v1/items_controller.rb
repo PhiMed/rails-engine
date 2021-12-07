@@ -1,17 +1,11 @@
 class Api::V1::ItemsController < ApplicationController
 
   def index
-    render json: Item.all
+    render json: ItemSerializer.new(Item.all)
   end
 
   def show
-    item = Item.find(params[:id])
-    merchant = Merchant.find(item.merchant.id)
-    content = {
-      item: item,
-      merchant: merchant
-               }
-    render json: content
+    render json: ItemSerializer.new(Item.find(params[:id]))
   end
 
   def create
