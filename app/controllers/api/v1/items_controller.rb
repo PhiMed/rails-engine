@@ -9,7 +9,12 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def create
-    render json: Item.create(item_params)
+    item = Item.create(item_params)
+    if item.save
+      render json: item.as_json, status: :ok
+    else
+      render json: {item: item.errors, status: 400}
+    end
   end
 
   def update

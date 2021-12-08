@@ -73,6 +73,45 @@ describe 'Items API' do
     expect(created_item.name).to eq(item_params[:name])
   end
 
+  it 'ignores disallowed attribute during creation' do
+    merchant_1 = create(:merchant)
+    item_params = ({
+                    name: 'Shiny New Thing',
+                    description: '25mmx25mm shiny thing',
+                    unit_price: '1000',
+                    merchant_id: merchant_1.id,
+                    hectares_per_liter: 50
+                  })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/items", headers: headers, params: JSON.generate(item: item_params)
+
+    created_item = Item.last
+
+    expect(response).to be_successful
+    expect(created_item.name).to eq(item_params[:name])
+    expect(created_item.attributes.keys).to eq(
+      ["id", "name", "description", "unit_price",
+       "merchant_id", "created_at", "updated_at"]
+                                               )
+  end
+
+  it 'returns an error if an attribute is missing' do
+    merchant_1 = create(:merchant)
+    item_params = ({
+                    name: 'I want to be a triangle',
+                  })
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    post "/api/v1/items", headers: headers, params: JSON.generate(item: item_params)
+
+    response_data =  JSON.parse(response.body, symbolize_names: true)
+
+    expect(response_data[:status]).to eq 400
+    expect(response_data[:item].values.flatten).to include("can't be blank")
+
+  end
+
   it "can update an existing item" do
     id = create(:item).id
     previous_name = Item.last.name
