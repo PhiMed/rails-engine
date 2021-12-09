@@ -38,41 +38,15 @@ From the root directory of the application, run </$ bundle exec rspec > in your 
 
 Postman:
 
-Download the a
-
-### Sample Tests
-
-Explain what these tests test and why
-
-    Give an example
-
-### Style test
-
-Checks if the best practices and the right coding style has been used.
-
-    Give an example
-
-## Deployment
-
-Add additional notes to deploy this on a live system
-
-## Built With
-
-  - [Contributor Covenant](https://www.contributor-covenant.org/) - Used
-    for the Code of Conduct
-  - [Creative Commons](https://creativecommons.org/) - Used to choose
-    the license
+Download the above Postman tests and import them into your Postman workspace. Host a local server ($rails s) and run the tests (individually or together).
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
-of conduct, and the process for submitting pull requests to us.
+Contact Philip, github PhiMed, phmedlin@gmail.com
 
 ## Versioning
 
-We use [Semantic Versioning](http://semver.org/) for versioning. For the versions
-available, see the [tags on this
-repository](https://github.com/PurpleBooth/a-good-readme-template/tags).
+All API paths are namespaced "V1" as of 12/09/2021
 
 ## Authors
 
