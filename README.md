@@ -48,23 +48,6 @@ Contact Philip, github PhiMed, phmedlin@gmail.com
 
 All API paths are namespaced "V1" as of 12/09/2021
 
-## Authors
-
-  - **Billie Thompson** - *Provided README Template* -
-    [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of
-[contributors](https://github.com/PurpleBooth/a-good-readme-template/contributors)
-who participated in this project.
-
-## License
-
-This project is licensed under the [CC0 1.0 Universal](LICENSE.md)
-Creative Commons License - see the [LICENSE.md](LICENSE.md) file for
-details
-
 ## Acknowledgments
 
-  - Hat tip to anyone whose code is used
-  - Inspiration
-  - etc
+This project is a student assignment from the Turing School, based on a repo constructed by faculty there. 
