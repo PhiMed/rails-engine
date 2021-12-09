@@ -141,6 +141,22 @@ describe 'Items API' do
     expect(item.name).to eq("Even Shinier This Time")
   end
 
+  it 'rejects an unsaved/bad update' do
+    id = create(:item).id
+    previous_name = Item.last.name
+    item_params = { merchant_id: "I want to be a triangle" }
+    headers = {"CONTENT_TYPE" => "application/json"}
+
+    patch "/api/v1/items/#{id}", headers: headers, params: JSON.generate({item: item_params})
+
+    item = Item.find_by(id: id)
+    response_data =  JSON.parse(response.body, symbolize_names: true)
+
+    expect(response.status).to eq 400
+    expect(response_data[:errors][:details]).to eq("There was an error completing this request")
+    expect(item.name).to eq(previous_name)
+  end
+
   #destroy
 
   it "can destroy an item" do

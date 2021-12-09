@@ -17,7 +17,6 @@ class Api::V1::SearchController < ApplicationController
     end
   end
 
-
   def item_find_name
     if params[:min_price].present? || params[:max_price].present?
       render json: {error: {details: "Search must must either be price or name, not both"}}, status: 400
@@ -41,7 +40,7 @@ class Api::V1::SearchController < ApplicationController
                  .first
       render json: ItemSerializer.new(item)
     else
-      render json: {error: {details: "Invalid parameters 26"}}, status: 400
+      render json: {error: {details: "Invalid parameters"}}, status: 400
     end
   end
 
