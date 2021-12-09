@@ -1,6 +1,9 @@
 require 'rails_helper'
 
 describe 'Items API' do
+
+  #index
+
   it 'sends a list of all items' do
     merchant_1 = create(:merchant)
     merchant_2 = create(:merchant)
@@ -34,6 +37,8 @@ describe 'Items API' do
     expect(items).to be_an(Array)
   end
 
+  #show
+
   it "can get one item by its id" do
     id = create(:item).id
 
@@ -49,6 +54,21 @@ describe 'Items API' do
     expect(item[:attributes]).to have_key(:unit_price)
     expect(item[:attributes][:unit_price]).to be_a(Float)
   end
+
+  it 'sad path if item doesnt exist' do
+    item = create(:item)
+
+    bad_id = item.id + 1
+
+    get "/api/v1/items/#{bad_id}"
+
+    parsed_response = (JSON.parse(response.body, symbolize_names: true))
+
+    expect(response.status).to eq(404)
+    expect(parsed_response[:errors][:details]).to eq("Not Found")
+  end
+
+#create
 
   it "can create a new item" do
     merchant_1 = create(:merchant)
@@ -101,10 +121,11 @@ describe 'Items API' do
 
     response_data =  JSON.parse(response.body, symbolize_names: true)
 
-    expect(response_data[:status]).to eq 400
-    expect(response_data[:item].values.flatten).to include("can't be blank")
-
+    expect(response.status).to eq 400
+    expect(response_data[:errors][:details]).to eq("There was an error completing this request")
   end
+
+  #update
 
   it "can update an existing item" do
     id = create(:item).id
@@ -120,6 +141,8 @@ describe 'Items API' do
     expect(item.name).to eq("Even Shinier This Time")
   end
 
+  #destroy
+
   it "can destroy an item" do
     item = create(:item)
 
@@ -128,6 +151,8 @@ describe 'Items API' do
     expect(response).to be_successful
     expect{Item.find(item.id)}.to raise_error(ActiveRecord::RecordNotFound)
   end
+
+  #item_merchant show
 
   it 'can get the merchant data for an item id' do
     merchant_1 = create(:merchant)
