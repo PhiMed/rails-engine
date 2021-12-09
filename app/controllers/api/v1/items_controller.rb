@@ -5,20 +5,29 @@ class Api::V1::ItemsController < ApplicationController
   end
 
   def show
-    render json: ItemSerializer.new(Item.find(params[:id]))
+    if Item.exists?(params[:id])
+      render json: ItemSerializer.new(Item.find(params[:id]))
+    else
+      render json: {errors: {details: "Not Found"}}, status: 404
+    end
   end
 
   def create
     item = Item.create(item_params)
     if item.save
-      render json: item.as_json, status: :ok
+      render json: ItemSerializer.new(Item.find(item.id)), status: 201
     else
-      render json: {item: item.errors, status: 400}
+      render json: {errors: {details: "There was an error completing this request"}}, status: 400
     end
   end
 
   def update
-    render json: Item.update(params[:id], item_params)
+    item = Item.update(params[:id], item_params)
+    if item.save
+      render json: ItemSerializer.new(item)
+    else
+      render json: {errors: {details: "There was an error completing this request"}}, status: 400
+    end
   end
 
   def destroy
