@@ -1,3 +1,5 @@
+![cover photo of an engine with the title rails engine and a pictograph of the database schema](https://user-images.githubusercontent.com/87627363/145451161-9e2bbf7d-82d9-461e-b33d-5477dba29856.png)
+
 # Rails-Engine
 
 Rails Engine is an API that provides endpoints for item and merchant information for a simulated e-commerce website. It allows a client to create and modify items via the API, as well as search functionality for names and min/max prices. 
