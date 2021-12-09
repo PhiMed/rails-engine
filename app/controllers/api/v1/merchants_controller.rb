@@ -10,10 +10,4 @@ class Api::V1::MerchantsController < ApplicationController
       render json: {errors: {details: "Not Found"}}, status: 404
     end
   end
-
-private
-
-  def merchant_params
-    params.require(:merchant).permit(:name)
-  end
 end
