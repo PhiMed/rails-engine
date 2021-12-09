@@ -112,7 +112,7 @@ describe 'Search API' do
     parsed_response = JSON.parse(response.body, symbolize_names: true)
 
     expect(response.status).to eq(400)
-    expect(parsed_response[:error][:details]).to eq("Search fields cannot be blank")
+    expect(parsed_response[:error][:details]).to eq("Invalid parameters")
   end
 
   #item_find_all

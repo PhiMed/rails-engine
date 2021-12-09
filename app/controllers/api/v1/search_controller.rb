@@ -13,7 +13,7 @@ class Api::V1::SearchController < ApplicationController
       params[:max_price].present? && params[:max_price].to_f > 0
         self.item_find_max
     else
-      render json: {error: {details: "Search fields cannot be blank"}}, status: 400
+      render json: {error: {details: "Invalid parameters"}}, status: 400
     end
   end
 
